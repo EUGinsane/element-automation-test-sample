@@ -9,7 +9,7 @@ export default () => {
 	step('Go to Flood login page', async browser => {
 		const loginPage = new LoginPage(browser)
 		await loginPage.visit()
-		await loginPage.authenticate('loannguyen@kms-technology.com', 'Qakms@2020')
+		await loginPage.authenticate('youremailhere', 'yourpasswordhere')
 
 		await browser.wait(15)
 	});
