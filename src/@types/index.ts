@@ -1,0 +1,3 @@
+interface SomeInteface {
+    name: string
+}
