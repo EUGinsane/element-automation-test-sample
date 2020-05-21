@@ -27,6 +27,7 @@ const MODES = {
 
 const scenariosPath = './src/scenarios'
 const mode = process.argv[2]
+const noHeadless = process.argv[process.argv.length - 1]
 // const options = isSingle ? process.argv.splice(4) : process.argv.splice(3)
 
 function clear() {
@@ -45,14 +46,14 @@ function getTestCases(scenario) {
 		.map(testCase => testCase.split('.')[0])
 }
 
-function runTestCase(scenario, testCase, options = []) {
+function runTestCase(scenario, testCase) {
 	logger.info(`\n${chalk.gray.bgYellow.bold(`  ${testCase}  `)} test case is running...\n`, false)
-	execSync(`element run ${scenariosPath}/${scenario}/${testCase}.ts ${options.join(' ')}`, {
+	execSync(`element run ${scenariosPath}/${scenario}/${testCase}.ts ${noHeadless}`, {
 		stdio: [0, 1, 2],
 	})
 }
 
-function runScenario(scenario, testCases, options = []) {
+function runScenario(scenario, testCases) {
 	const allTestCases = getTestCases(scenario)
 	const currentNumberOfTestCases = testCases.length || allTestCases.length
 	logger.info(
@@ -64,12 +65,12 @@ function runScenario(scenario, testCases, options = []) {
 	if (testCases.length) {
 		testCases.forEach(testCase => {
 			if (allTestCases.includes(testCase)) {
-				runTestCase(scenario, testCase, options)
+				runTestCase(scenario, testCase)
 			}
 		})
 	} else {
 		allTestCases.forEach(testCase => {
-			runTestCase(scenario, testCase, options)
+			runTestCase(scenario, testCase)
 		})
 	}
 }
